@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Classification</title>
+</head>
+<body>
+    <h1>Upload an Image</h1>
+    <form method="POST" enctype="multipart/form-data" action="/api/upload/">
+        {% csrf_token %}
+        <input type="file" name="image" accept="image/*" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <h2>Result:</h2>
+    {% if result %}
+        <p>Prediction: {{ result.label }}</p>
+        <p>Confidence: {{ result.confidence }}</p>
+        <h3>Uploaded Image:</h3>
+        <img src="{{ MEDIA_URL }}{{ image_url }}" alt="Uploaded Image" style="max-width:300px;">
+    {% endif %}
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+</body>
+</html>
